@@ -51,8 +51,16 @@ yarn dev
   - Hard: 8+ letter words
 - Type the displayed word correctly before the timer runs out
 - Score points based on speed and accuracy
-- Game saves automatically if you need to leave
+- The game saves automatically if you need to leave
 - Compare your scores with others on the leaderboard
+
+## Screenshots
+![image](https://github.com/user-attachments/assets/cc7939f7-3fcb-4b7b-9dd3-64fe39b9e31e)
+![image](https://github.com/user-attachments/assets/a784d206-e964-4328-9c1b-8dc68ef615b4)
+![image](https://github.com/user-attachments/assets/62e9dc72-bc4c-473e-a6cf-b982c52ff849)
+
+## Working Video
+https://github.com/user-attachments/assets/4b504378-4c79-4828-a7a5-f6cdaa1ed2cd
 
 ## Testing 🧪
 
