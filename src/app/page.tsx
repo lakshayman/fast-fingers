@@ -63,7 +63,7 @@ export default function Home() {
 
   const handleRestart = () => {
     if (savedState) {
-      updateLeaderboard(savedState.localScore);
+      updateLeaderboard(savedState.playerName, savedState.difficulty, savedState.localScore);
     }
     setSavedState(null);
     localStorage.removeItem('gameState');
@@ -71,7 +71,7 @@ export default function Home() {
     setScreen("FORM");
   };
 
-  const updateLeaderboard = (score: number) => {
+  const updateLeaderboard = (playerName: string, difficulty: string, score: number) => {
     const newEntry: LeaderboardEntry = {
       playerName,
       score,
@@ -164,7 +164,7 @@ export default function Home() {
           difficulty={difficulty} 
           setScore={(score) => {
             setScore(score);
-            updateLeaderboard(score);
+            updateLeaderboard(playerName, difficulty, score);
             localStorage.removeItem('gameState');
           }}
           setScreen={setScreen}
