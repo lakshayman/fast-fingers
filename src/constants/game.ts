@@ -1,3 +1,5 @@
+import { LeaderboardEntry } from "@/types/game";
+
 export const INITIAL_DIFFICULTY_FACTORS = {
   easy: 1,
   medium: 1.5,
@@ -16,4 +18,15 @@ export const DIFFICULTIES = [
   { label: "Easy", value: "easy", description: "2 - 4 letter words" },
   { label: "Medium", value: "medium", description: "5 - 8 letter words" },
   { label: "Hard", value: "hard", description: "8+ letter words" },
-]; 
+];
+
+export const initialState = {
+  screen: "FORM",
+  score: 0,
+  dictionary: {},
+  isLoading: true,
+  leaderboard: [] as LeaderboardEntry[],
+  highestScore: 0,
+  showResume: false,
+  savedState: null,
+} as const; 
