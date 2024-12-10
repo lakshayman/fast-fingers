@@ -18,7 +18,7 @@ import {
 import { Field } from "@/components/ui/field";
 import { LuKeyboard, LuZap } from "react-icons/lu";
 
-export default function Form({ playerName, difficulty, setPlayerName, setDifficulty, setIsGameStarted }: { playerName: string, difficulty: string, setPlayerName: (playerName: string) => void, setDifficulty: (difficulty: string) => void, setIsGameStarted: (isGameStarted: boolean) => void }) {
+export default function Form({ playerName, difficulty, setPlayerName, setDifficulty, setScreen }: { playerName: string, difficulty: string, setPlayerName: (playerName: string) => void, setDifficulty: (difficulty: string) => void, setScreen: (screen: string) => void }) {
 
     const difficulties = createListCollection({
         items: [
@@ -32,7 +32,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
         console.log("Starting game with:", { playerName, difficulty });
         typeof window !== "undefined" && window.sessionStorage.setItem("playerName", playerName);
         typeof window !== "undefined" && window.sessionStorage.setItem("difficulty", difficulty);
-        setIsGameStarted(true);
+        setScreen("GAME");
     };
 
     return (
