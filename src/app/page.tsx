@@ -1,6 +1,6 @@
 "use client"
 
-import { Container, VStack, Text, Table, HStack, Button, Box } from "@chakra-ui/react"
+import { Container, VStack, Text, Table, HStack, Button, Box, Spinner } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
@@ -94,7 +94,7 @@ export default function Home() {
   const renderLeaderboard = () => (
     <VStack gap={4} align="stretch">
       <Text fontSize="2xl" fontWeight="bold">Leaderboard</Text>
-      <Text>Highest Score: {highestScore.toFixed(2)}</Text>
+      <Text suppressHydrationWarning>Highest Score: {highestScore.toFixed(2)}</Text>
       <Table.Root size="md" variant="outline">
         <Table.Header>
           <Table.Row>
@@ -109,8 +109,8 @@ export default function Home() {
             <Table.Row key={index}> 
               <Table.Cell>{item.playerName}</Table.Cell>
               <Table.Cell>{item.difficulty}</Table.Cell>
-              <Table.Cell textAlign="end">{item.score.toFixed(2)}</Table.Cell>
-              <Table.Cell textAlign="end">{new Date(item.timestamp).toLocaleString()}</Table.Cell>
+              <Table.Cell textAlign="end" suppressHydrationWarning>{item.score.toFixed(2)}</Table.Cell>
+              <Table.Cell textAlign="end" suppressHydrationWarning>{new Date(item.timestamp).toLocaleString()}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -119,7 +119,12 @@ export default function Home() {
   );
 
   if (isLoading) {
-    return <Container maxW="container.sm" py={16}>Loading...</Container>;
+    return <Container maxW="container.sm" py={16} justifyContent="center" alignItems="center">
+      <Spinner
+        size="lg"
+        color="blue.500"
+      />
+    </Container>;
   }
 
   if (showResume) {
@@ -160,7 +165,7 @@ export default function Home() {
           setScore={(score) => {
             setScore(score);
             updateLeaderboard(score);
-            localStorage.removeItem('gameState'); // Clear saved game state when game ends
+            localStorage.removeItem('gameState');
           }}
           setScreen={setScreen}
           dictionary={dictionary}

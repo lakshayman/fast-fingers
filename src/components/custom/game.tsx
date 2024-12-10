@@ -182,7 +182,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
         <VStack align="start">
           <Text>Player: {playerName}</Text>
           <Text>Difficulty: {difficulty}</Text>
-          <Text>Difficulty Factor: {difficultyFactor.toFixed(2)}</Text>
+          <Text suppressHydrationWarning>Difficulty Factor: {difficultyFactor.toFixed(2)}</Text>
         </VStack>
         <Button onClick={handleStopGame} colorScheme="red">
           Stop Game
@@ -200,7 +200,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
           <ProgressBar />
         </ProgressRoot>
       </Box>
-      <Text textAlign="center">Time Left: {timeLeft.toFixed(1)}s</Text>
+      <Text textAlign="center" suppressHydrationWarning>Time Left: {timeLeft.toFixed(1)}s</Text>
 
       <VStack gap={4}>
         <Text fontSize="2xl" fontWeight="bold">{currentWord}</Text>
@@ -215,7 +215,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
         />
       </VStack>
 
-      <Text textAlign="center" fontSize="xl">
+      <Text textAlign="center" fontSize="xl" suppressHydrationWarning>
         Score: {localScore.toFixed(2)}
       </Text>
     </VStack>

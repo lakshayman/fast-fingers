@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: "Test and improve your typing speed with Fast Fingers. Challenge yourself with different difficulty levels and compete for high scores!",
   keywords: "typing game, typing speed, typing test, fast fingers, typing practice",
   authors: [{ name: "Lakshay Manchanda" }],
-  viewport: "width=device-width, initial-scale=1",
-  icons: {
-    icon: '/keyboard.png',
-    apple: '/keyboard.png',
-  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
