@@ -45,8 +45,8 @@ export default function Home() {
     if (savedLeaderboard) {
       const parsedLeaderboard = JSON.parse(savedLeaderboard);
       setLeaderboard(parsedLeaderboard);
-      
-      const highest = parsedLeaderboard.reduce((max: number, entry: LeaderboardEntry) => 
+
+      const highest = parsedLeaderboard.reduce((max: number, entry: LeaderboardEntry) =>
         entry.score > max ? entry.score : max, 0);
       setHighestScore(highest);
     }
@@ -92,29 +92,31 @@ export default function Home() {
   };
 
   const renderLeaderboard = () => (
-    <VStack gap={4} align="stretch">
+    <VStack gap={4} align="stretch" bg="white" borderRadius="xl" p={4}>
       <Text fontSize="2xl" fontWeight="bold">Leaderboard</Text>
       <Text suppressHydrationWarning>Highest Score: {highestScore.toFixed(2)}</Text>
-      <Table.Root size="md" variant="outline">
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeader>Player Name</Table.ColumnHeader>
-            <Table.ColumnHeader>Difficulty</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="end">Score</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="end">Date and Time</Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {leaderboard.map((item, index) => (
-            <Table.Row key={index}> 
-              <Table.Cell>{item.playerName}</Table.Cell>
-              <Table.Cell>{item.difficulty}</Table.Cell>
-              <Table.Cell textAlign="end" suppressHydrationWarning>{item.score.toFixed(2)}</Table.Cell>
-              <Table.Cell textAlign="end" suppressHydrationWarning>{new Date(item.timestamp).toLocaleString()}</Table.Cell>
+      <Box overflowX="auto" width="100%">
+        <Table.Root size={{base: "sm", md: "lg"}} variant="outline">
+          <Table.Header borderWidth={1} borderColor="black">
+            <Table.Row>
+              <Table.ColumnHeader>Player</Table.ColumnHeader>
+              <Table.ColumnHeader>Diff</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Score</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Date</Table.ColumnHeader>
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+          </Table.Header>
+          <Table.Body borderWidth={1} borderColor="black">
+            {leaderboard.map((item, index) => (
+              <Table.Row key={index}>
+                <Table.Cell>{item.playerName}</Table.Cell>
+                <Table.Cell>{item.difficulty}</Table.Cell>
+                <Table.Cell textAlign="end" suppressHydrationWarning>{item.score.toFixed(2)}</Table.Cell>
+                <Table.Cell textAlign="end" suppressHydrationWarning>{new Date(item.timestamp).toLocaleString()}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </Box>
     </VStack>
   );
 
@@ -129,7 +131,7 @@ export default function Home() {
 
   if (showResume) {
     return (
-      <Container maxW="container.sm" py={16}>
+      <Container maxW="100%" h="100vh" py={16} bg="yellow.300">
         <VStack gap={6}>
           <Text fontSize="xl">Game in progress found</Text>
           <Text>Would you like to resume your previous game?</Text>
@@ -137,8 +139,8 @@ export default function Home() {
           <Text>Score: {savedState?.localScore.toFixed(2)}</Text>
           <Text>Difficulty: {savedState?.difficulty}</Text>
           <HStack>
-            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleResume} colorScheme="blue">Resume Game</Button>
-            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleRestart}>Start New Game</Button>
+            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleResume} colorScheme="blue">Resume Game</Button>
+            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleRestart}>Start New Game</Button>
           </HStack>
         </VStack>
       </Container>
@@ -146,22 +148,22 @@ export default function Home() {
   }
 
   return (
-    <Container maxW="container.sm" py={16}>
+    <Container w="100%" h="100vh" maxW="100%" py={16} bg="url('/bg.jpg')" bgSize="cover" overflow="auto">
       {screen === "FORM" ? (
         <VStack gap={8}>
-          <Form 
-            playerName={playerName} 
-            difficulty={difficulty} 
-            setPlayerName={setPlayerName} 
-            setDifficulty={setDifficulty} 
-            setScreen={setScreen} 
+          <Form
+            playerName={playerName}
+            difficulty={difficulty}
+            setPlayerName={setPlayerName}
+            setDifficulty={setDifficulty}
+            setScreen={setScreen}
           />
           {leaderboard.length > 0 && renderLeaderboard()}
         </VStack>
       ) : screen === "GAME" ? (
-        <Game 
-          playerName={playerName} 
-          difficulty={difficulty} 
+        <Game
+          playerName={playerName}
+          difficulty={difficulty}
           setScore={(score) => {
             setScore(score);
             updateLeaderboard(playerName, difficulty, score);
@@ -176,7 +178,7 @@ export default function Home() {
           <Box display="flex" flexDirection="column" alignItems="center">
             <Text fontSize="2xl">Final Score: {score}</Text>
             {score === highestScore && <Text color="green.500">New High Score!</Text>}
-            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={() => setScreen("GAME")}>Play Again</Button>
+            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={() => setScreen("GAME")}>Play Again</Button>
           </Box>
           {renderLeaderboard()}
         </VStack>

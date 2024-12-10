@@ -33,7 +33,6 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [totalTimeElapsed, setTotalTimeElapsed] = useState(savedState?.totalTimeElapsed || 0);
   const [wordStartTime, setWordStartTime] = useState(savedState?.wordStartTime || 0);
-  const [showResume, setShowResume] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -142,48 +141,15 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     endGame();
   };
 
-  const handleResume = () => {
-    if (savedState) {
-      setCurrentWord(savedState.currentWord);
-      setTimeLeft(savedState.timeLeft);
-      setLocalScore(savedState.localScore);
-      setDifficulty(savedState.difficulty);
-      setDifficultyFactor(savedState.difficultyFactor);
-      setTotalTimeElapsed(savedState.totalTimeElapsed);
-      setWordStartTime(savedState.wordStartTime);
-    }
-    setShowResume(false);
-    localStorage.removeItem('gameState');
-  };
-
-  const handleRestart = () => {
-    localStorage.removeItem('gameState');
-    setShowResume(false);
-    startNewWord();
-  };
-
-  if (showResume) {
-    return (
-      <VStack gap={6}>
-        <Text fontSize="xl">Game in progress found</Text>
-        <Text>Would you like to resume your previous game?</Text>
-        <HStack>
-          <Button onClick={handleResume} colorScheme="blue">Resume Game</Button>
-          <Button onClick={handleRestart}>Start New Game</Button>
-        </HStack>
-      </VStack>
-    );
-  }
-
   return (
     <VStack gap={6} align="stretch">
       <HStack justify="space-between">
-        <VStack align="start">
+        <VStack align="start" bg="white" borderRadius="xl" p={4}>
           <Text>Player: {playerName}</Text>
           <Text>Difficulty: {difficulty}</Text>
           <Text suppressHydrationWarning>Difficulty Factor: {difficultyFactor.toFixed(2)}</Text>
         </VStack>
-        <Button onClick={handleStopGame} colorScheme="red">
+        <Button onClick={handleStopGame} bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} _hover={{ bg: 'red.600', color: 'white' }}>
           Stop Game
         </Button>
       </HStack>
@@ -199,10 +165,10 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
           <ProgressBar />
         </ProgressRoot>
       </Box>
-      <Text textAlign="center" suppressHydrationWarning>Time Left: {timeLeft.toFixed(1)}s</Text>
+      <Text margin="auto" w="fit-content" textAlign="center" suppressHydrationWarning bg="white" borderRadius="xl" p={4}>Time Left: {timeLeft.toFixed(1)}s</Text>
 
       <VStack gap={4}>
-        <Text fontSize="2xl" fontWeight="bold">{currentWord}</Text>
+        <Text fontSize="2xl" fontWeight="bold" bg="white" borderRadius="xl" p={4} w="fit-content">{currentWord}</Text>
         <Input
           ref={inputRef}
           value={input}
@@ -212,11 +178,13 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
           maxW="400px"
           transition="color 0.2s ease"
           padding={2}
+          bg="white"
+          borderRadius="xl"
           autoFocus
         />
       </VStack>
 
-      <Text textAlign="center" fontSize="xl" suppressHydrationWarning>
+      <Text margin="auto" w="fit-content" textAlign="center" fontSize="xl" suppressHydrationWarning bg="white" borderRadius="xl" p={4}>
         Score: {localScore.toFixed(2)}
       </Text>
     </VStack>

@@ -37,7 +37,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
     };
 
     return (
-        <VStack align="stretch">
+        <VStack align="stretch" w="100%" maxW="lg">
             <VStack>
                 <Icon fontSize="40px">
                     <LuKeyboard />
@@ -48,18 +48,18 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
             <Box
                 p={6}
                 borderRadius="xl"
-                maxW="sm"
+                w="100%"
                 margin="auto"
                 borderWidth={1}
                 borderColor="gray.200"
                 bg="white"
             >
-                <VStack>
+                <VStack w="100%">
                     <Field label="Player Name *">
                         <Input
                             px={4}
                             placeholder="Enter your name"
-                            size="lg"
+                            size="xl"
                             border="1px solid"
                             borderColor="gray.200"
                             borderRadius="xl"
