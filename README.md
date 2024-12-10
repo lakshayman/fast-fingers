@@ -55,15 +55,17 @@ yarn dev
 - Compare your scores with others on the leaderboard
 
 ## Time taken to complete
-1 Day 6 Hours
+- 1 Day 6 Hours
 
 ## Screenshots
-![image](https://github.com/user-attachments/assets/cc7939f7-3fcb-4b7b-9dd3-64fe39b9e31e)
-![image](https://github.com/user-attachments/assets/a784d206-e964-4328-9c1b-8dc68ef615b4)
-![image](https://github.com/user-attachments/assets/62e9dc72-bc4c-473e-a6cf-b982c52ff849)
+![image](https://github.com/user-attachments/assets/e935c44a-3002-4f98-b55f-41e5a137d762)
+![image](https://github.com/user-attachments/assets/d2b9da1d-a59b-41b8-a73a-105742ab74b5)
+![image](https://github.com/user-attachments/assets/e87f93fc-7514-4c87-a3c6-f6bc814060ff)
+![image](https://github.com/user-attachments/assets/a992abdb-05b9-4674-856e-0f20a9d0ef37)
+
 
 ## Working Video
-https://github.com/user-attachments/assets/4b504378-4c79-4828-a7a5-f6cdaa1ed2cd
+https://github.com/user-attachments/assets/2d77f439-24e4-4b0a-8570-e734d0e564b2
 
 ## Testing 🧪
 
@@ -80,6 +82,9 @@ npm run test:watch
 # or
 yarn test:watch
 ```
+## Test Coverage
+![image](https://github.com/user-attachments/assets/bd7e8044-b8a3-4374-947c-507f4e3d26fd)
+
 
 ## Contributing 🤝
 
