@@ -3,4 +3,4 @@ export interface LeaderboardEntry {
   score: number;
   difficulty: string;
   timestamp: number;
-} 
+}
