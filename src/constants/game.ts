@@ -7,7 +7,7 @@ export const INITIAL_DIFFICULTY_FACTORS = {
 export const WORD_LENGTH_RANGES = {
   easy: { min: 2, max: 4 },
   medium: { min: 5, max: 8 },
-  hard: { min: 9, max: Infinity }
+  hard: { min: 9 }
 };
 
 export const MIN_TIME_SECONDS = 2;

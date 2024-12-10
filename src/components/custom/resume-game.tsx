@@ -9,8 +9,8 @@ interface ResumeGameProps {
 
 export default function ResumeGame({ savedState, onResume, onRestart }: ResumeGameProps) {
   return (
-    <Container maxW="100%" h="100vh" py={16} bg="yellow.300">
-      <VStack gap={6}>
+    <Container maxW="100%" h="100vh" py={16} bg="url('/bg.jpg')" bgSize="cover">
+      <VStack gap={6} color="white">
         <Text fontSize="xl">Game in progress found</Text>
         <Text>Would you like to resume your previous game?</Text>
         <Text>Player: {savedState?.playerName}</Text>
@@ -25,12 +25,13 @@ export default function ResumeGame({ savedState, onResume, onRestart }: ResumeGa
             p={4} 
             className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" 
             onClick={onResume} 
-            colorScheme="blue"
+            color="black"
           >
             Resume Game
           </Button>
           <Button 
             bg="white" 
+            color="black"
             borderWidth={1} 
             borderColor="gray.200" 
             borderRadius="xl" 

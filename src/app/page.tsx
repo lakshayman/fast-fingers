@@ -95,7 +95,7 @@ export default function Home() {
   };
 
   if (isLoading) {
-    return <Container maxW="container.sm" py={16} justifyContent="center" alignItems="center">
+    return <Container maxW="100%" h="100vh" py={16} justifyContent="center" alignItems="center" bg="url('/bg.jpg')" bgSize="cover">
       <Spinner
         size="lg"
         color="blue.500"
@@ -145,6 +145,7 @@ export default function Home() {
           highestScore={highestScore}
           leaderboard={leaderboard}
           onPlayAgain={() => setScreen("GAME")}
+          setScreen={setScreen}
         />
       )}
     </Container>

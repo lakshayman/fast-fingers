@@ -39,10 +39,10 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
     return (
         <VStack align="stretch" w="100%" maxW="lg">
             <VStack>
-                <Icon fontSize="40px">
+                <Icon fontSize="40px" color="white">
                     <LuKeyboard />
                 </Icon>
-                <Heading size="2xl" textAlign="center">Fast Fingers</Heading>
+                <Heading size="2xl" textAlign="center" color="white">Fast Fingers</Heading>
             </VStack>
 
             <Box

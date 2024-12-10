@@ -12,7 +12,8 @@ const defaultProps = {
   score: 95,
   highestScore: 100,
   leaderboard: mockLeaderboard,
-  onPlayAgain: jest.fn()
+  onPlayAgain: jest.fn(),
+  setScreen: jest.fn()
 }
 
 describe('FinalScore', () => {
