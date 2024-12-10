@@ -6,6 +6,9 @@ import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
 import { getDictionaryByDifficulty } from "@/utils/dictionary"
 import type { LeaderboardEntry, GameState } from "@/types/game"
+import Leaderboard from "@/components/custom/leaderboard"
+import ResumeGame from "@/components/custom/resume-game"
+import FinalScore from "@/components/custom/final-score"
 
 export default function Home() {
   const [playerName, setPlayerName] = useState("")
@@ -91,35 +94,6 @@ export default function Home() {
     }
   };
 
-  const renderLeaderboard = () => (
-    <VStack gap={4} align="stretch" bg="white" borderRadius="xl" p={4}>
-      <Text fontSize="2xl" fontWeight="bold">Leaderboard</Text>
-      <Text suppressHydrationWarning>Highest Score: {highestScore.toFixed(2)}</Text>
-      <Box overflowX="auto" width="100%">
-        <Table.Root size={{base: "sm", md: "lg"}} variant="outline">
-          <Table.Header borderWidth={1} borderColor="black">
-            <Table.Row>
-              <Table.ColumnHeader>Player</Table.ColumnHeader>
-              <Table.ColumnHeader>Diff</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">Score</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">Date</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body borderWidth={1} borderColor="black">
-            {leaderboard.map((item, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>{item.playerName}</Table.Cell>
-                <Table.Cell>{item.difficulty}</Table.Cell>
-                <Table.Cell textAlign="end" suppressHydrationWarning>{item.score.toFixed(2)}</Table.Cell>
-                <Table.Cell textAlign="end" suppressHydrationWarning>{new Date(item.timestamp).toLocaleString()}</Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
-      </Box>
-    </VStack>
-  );
-
   if (isLoading) {
     return <Container maxW="container.sm" py={16} justifyContent="center" alignItems="center">
       <Spinner
@@ -131,19 +105,11 @@ export default function Home() {
 
   if (showResume) {
     return (
-      <Container maxW="100%" h="100vh" py={16} bg="yellow.300">
-        <VStack gap={6}>
-          <Text fontSize="xl">Game in progress found</Text>
-          <Text>Would you like to resume your previous game?</Text>
-          <Text>Player: {savedState?.playerName}</Text>
-          <Text>Score: {savedState?.localScore.toFixed(2)}</Text>
-          <Text>Difficulty: {savedState?.difficulty}</Text>
-          <HStack>
-            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleResume} colorScheme="blue">Resume Game</Button>
-            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleRestart}>Start New Game</Button>
-          </HStack>
-        </VStack>
-      </Container>
+      <ResumeGame 
+        savedState={savedState}
+        onResume={handleResume}
+        onRestart={handleRestart}
+      />
     );
   }
 
@@ -158,7 +124,7 @@ export default function Home() {
             setDifficulty={setDifficulty}
             setScreen={setScreen}
           />
-          {leaderboard.length > 0 && renderLeaderboard()}
+          {leaderboard.length > 0 && <Leaderboard leaderboard={leaderboard} highestScore={highestScore} />}
         </VStack>
       ) : screen === "GAME" ? (
         <Game
@@ -174,14 +140,12 @@ export default function Home() {
           savedState={savedState}
         />
       ) : (
-        <VStack gap={8}>
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Text fontSize="2xl">Final Score: {score}</Text>
-            {score === highestScore && <Text color="green.500">New High Score!</Text>}
-            <Button bg="white" borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={() => setScreen("GAME")}>Play Again</Button>
-          </Box>
-          {renderLeaderboard()}
-        </VStack>
+        <FinalScore 
+          score={score}
+          highestScore={highestScore}
+          leaderboard={leaderboard}
+          onPlayAgain={() => setScreen("GAME")}
+        />
       )}
     </Container>
   );

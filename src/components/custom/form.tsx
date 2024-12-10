@@ -80,6 +80,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                             borderRadius="xl"
                             value={[difficulty]}
                             onValueChange={(e) => setDifficulty(e.value[0])}
+                            data-testid="difficulty"
                         >
                             <SelectTrigger>
                                 <SelectValueText placeholder="Select difficulty" />
@@ -90,6 +91,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                                         item={difficulty}
                                         key={difficulty.value}
                                         className="bg-white hover:bg-blue-100 cursor-pointer"
+                                        data-testid={`difficulty-${difficulty.value}`}
                                     >
                                         <VStack align="start">
                                             <Text fontWeight="medium">{difficulty.label}</Text>
@@ -103,7 +105,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                         </SelectRoot>
                     </Field>
 
-                    <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" disabled={!playerName || !difficulty} onClick={handleStartGame}>
+                    <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" disabled={!playerName || !difficulty} data-testid="start-button" onClick={handleStartGame}>
                         <Icon fontSize="20px"><LuZap /></Icon>
                         <Text>Start Game</Text>
                     </Button>
