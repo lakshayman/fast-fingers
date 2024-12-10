@@ -137,8 +137,8 @@ export default function Home() {
           <Text>Score: {savedState?.localScore.toFixed(2)}</Text>
           <Text>Difficulty: {savedState?.difficulty}</Text>
           <HStack>
-            <Button onClick={handleResume} colorScheme="blue">Resume Game</Button>
-            <Button onClick={handleRestart}>Start New Game</Button>
+            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleResume} colorScheme="blue">Resume Game</Button>
+            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={handleRestart}>Start New Game</Button>
           </HStack>
         </VStack>
       </Container>
@@ -173,10 +173,10 @@ export default function Home() {
         />
       ) : (
         <VStack gap={8}>
-          <Box>
+          <Box display="flex" flexDirection="column" alignItems="center">
             <Text fontSize="2xl">Final Score: {score}</Text>
             {score === highestScore && <Text color="green.500">New High Score!</Text>}
-            <Button onClick={() => setScreen("FORM")}>Play Again</Button>
+            <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" onClick={() => setScreen("GAME")}>Play Again</Button>
           </Box>
           {renderLeaderboard()}
         </VStack>

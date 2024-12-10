@@ -27,13 +27,14 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
   const [localScore, setLocalScore] = useState(savedState?.localScore || 0);
   const [difficulty, setDifficulty] = useState(savedState?.difficulty || initialDifficulty);
   const [difficultyFactor, setDifficultyFactor] = useState(
-    savedState?.difficultyFactor || 
+    savedState?.difficultyFactor ||
     INITIAL_DIFFICULTY_FACTORS[initialDifficulty as keyof typeof INITIAL_DIFFICULTY_FACTORS]
   );
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [totalTimeElapsed, setTotalTimeElapsed] = useState(savedState?.totalTimeElapsed || 0);
   const [wordStartTime, setWordStartTime] = useState(savedState?.wordStartTime || 0);
   const [showResume, setShowResume] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const saveState = () => {
@@ -89,6 +90,10 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     setTimeLeft(wordTime);
     setWordStartTime(wordTime);
 
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
@@ -119,16 +124,10 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
       setTotalTimeElapsed(prev => prev + timeSpent);
       setLocalScore((prev) => prev + timeSpent);
       updateDifficultyLevel();
-      e.target.style.color = 'green';
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-      setTimeout(() => {
-        setInput("");
-        startNewWord();
-      }, 500);
+      setInput("");
+      startNewWord();
     } else {
-      e.target.style.color = e.target.value === currentWord.slice(0, e.target.value.length) ? 'black' : 'red';
+      e.target.style.color = e.target.value === currentWord.slice(0, e.target.value.length) ? 'green' : 'red';
     }
   };
 
@@ -190,11 +189,11 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
       </HStack>
 
       <Box display="flex" justifyContent="center">
-        <ProgressRoot 
-          value={(timeLeft / calculateTimeForWord(currentWord)) * 100} 
-          colorPalette="blue" 
-          variant="outline" 
-          width="400px" 
+        <ProgressRoot
+          value={(timeLeft / calculateTimeForWord(currentWord)) * 100}
+          colorPalette="blue"
+          variant="outline"
+          width="400px"
           maxWidth="400px"
         >
           <ProgressBar />
@@ -204,7 +203,8 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
 
       <VStack gap={4}>
         <Text fontSize="2xl" fontWeight="bold">{currentWord}</Text>
-        <Input 
+        <Input
+          ref={inputRef}
           value={input}
           onChange={handleInputChange}
           placeholder="Type the word here..."
@@ -212,6 +212,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
           maxW="400px"
           transition="color 0.2s ease"
           padding={2}
+          autoFocus
         />
       </VStack>
 

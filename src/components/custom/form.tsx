@@ -55,23 +55,29 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                 bg="white"
             >
                 <VStack>
-                    <Field label="Player Name">
+                    <Field label="Player Name *">
                         <Input
                             px={4}
                             placeholder="Enter your name"
                             size="lg"
+                            border="1px solid"
+                            borderColor="gray.200"
+                            borderRadius="xl"
                             value={playerName}
                             onChange={(e) => setPlayerName(e.target.value)}
                             _placeholder={{ color: 'gray.400' }}
                         />
                     </Field>
 
-                    <Field label="Difficulty Level">
+                    <Field label="Difficulty Level *">
                         <SelectRoot
                             collection={difficulties}
                             size="lg"
                             width="100%"
                             px={4}
+                            border="1px solid"
+                            borderColor="gray.200"
+                            borderRadius="xl"
                             value={[difficulty]}
                             onValueChange={(e) => setDifficulty(e.value[0])}
                         >
@@ -97,7 +103,7 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                         </SelectRoot>
                     </Field>
 
-                    <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100" disabled={!playerName || !difficulty} onClick={handleStartGame}>
+                    <Button borderWidth={1} borderColor="gray.200" borderRadius="xl" p={4} className="hover:bg-blue-100 disabled:bg-gray-200 disabled:cursor-not-allowed" disabled={!playerName || !difficulty} onClick={handleStartGame}>
                         <Icon fontSize="20px"><LuZap /></Icon>
                         <Text>Start Game</Text>
                     </Button>
