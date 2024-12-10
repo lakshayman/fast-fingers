@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Text, Input, VStack, HStack, Button } from "@chakra-ui/react";
 import { ProgressRoot, ProgressBar } from "@/components/ui/progress";
+import { GameState } from "@/types/game";
 
 const INITIAL_DIFFICULTY_FACTORS = {
   easy: 1,
@@ -10,28 +11,53 @@ const INITIAL_DIFFICULTY_FACTORS = {
 
 const MIN_TIME_SECONDS = 2;
 
-function Game({ 
-  playerName, 
-  difficulty: initialDifficulty, 
-  setScore, 
-  setScreen,
-  dictionary
-}: { 
-  playerName: string, 
-  difficulty: string, 
-  setScore: (score: number) => void,
-  setScreen: (screen: string) => void,
-  dictionary: Record<string, string[]>
-}) {
-  const [currentWord, setCurrentWord] = useState("");
+interface Props {
+  playerName: string;
+  difficulty: string;
+  setScore: (score: number) => void;
+  setScreen: (screen: string) => void;
+  dictionary: Record<string, string[]>;
+  savedState: GameState | null;
+}
+
+function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, dictionary, savedState }: Props) {
+  const [currentWord, setCurrentWord] = useState(savedState?.currentWord || "");
   const [input, setInput] = useState("");
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [localScore, setLocalScore] = useState(0);
-  const [difficulty, setDifficulty] = useState(initialDifficulty);
-  const [difficultyFactor, setDifficultyFactor] = useState(INITIAL_DIFFICULTY_FACTORS[initialDifficulty as keyof typeof INITIAL_DIFFICULTY_FACTORS]);
+  const [timeLeft, setTimeLeft] = useState(savedState?.timeLeft || 0);
+  const [localScore, setLocalScore] = useState(savedState?.localScore || 0);
+  const [difficulty, setDifficulty] = useState(savedState?.difficulty || initialDifficulty);
+  const [difficultyFactor, setDifficultyFactor] = useState(
+    savedState?.difficultyFactor || 
+    INITIAL_DIFFICULTY_FACTORS[initialDifficulty as keyof typeof INITIAL_DIFFICULTY_FACTORS]
+  );
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const [totalTimeElapsed, setTotalTimeElapsed] = useState(0);
-  const [wordStartTime, setWordStartTime] = useState(0);
+  const [totalTimeElapsed, setTotalTimeElapsed] = useState(savedState?.totalTimeElapsed || 0);
+  const [wordStartTime, setWordStartTime] = useState(savedState?.wordStartTime || 0);
+  const [showResume, setShowResume] = useState(false);
+
+  useEffect(() => {
+    const saveState = () => {
+      const state: GameState = {
+        currentWord,
+        timeLeft,
+        localScore,
+        difficulty,
+        difficultyFactor,
+        totalTimeElapsed,
+        wordStartTime,
+        playerName
+      };
+      localStorage.setItem('gameState', JSON.stringify(state));
+    };
+
+    const interval = setInterval(saveState, 1000);
+    window.addEventListener('beforeunload', saveState);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('beforeunload', saveState);
+    };
+  }, [currentWord, timeLeft, localScore, difficulty, difficultyFactor, totalTimeElapsed, wordStartTime]);
 
   const getRandomWord = () => {
     const words = dictionary[difficulty];
@@ -88,14 +114,21 @@ function Game({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-    
     if (e.target.value === currentWord) {
       const timeSpent = wordStartTime - timeLeft;
       setTotalTimeElapsed(prev => prev + timeSpent);
       setLocalScore((prev) => prev + timeSpent);
       updateDifficultyLevel();
-      setInput("");
-      startNewWord();
+      e.target.style.color = 'green';
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      setTimeout(() => {
+        setInput("");
+        startNewWord();
+      }, 500);
+    } else {
+      e.target.style.color = e.target.value === currentWord.slice(0, e.target.value.length) ? 'black' : 'red';
     }
   };
 
@@ -109,6 +142,39 @@ function Game({
   const handleStopGame = () => {
     endGame();
   };
+
+  const handleResume = () => {
+    if (savedState) {
+      setCurrentWord(savedState.currentWord);
+      setTimeLeft(savedState.timeLeft);
+      setLocalScore(savedState.localScore);
+      setDifficulty(savedState.difficulty);
+      setDifficultyFactor(savedState.difficultyFactor);
+      setTotalTimeElapsed(savedState.totalTimeElapsed);
+      setWordStartTime(savedState.wordStartTime);
+    }
+    setShowResume(false);
+    localStorage.removeItem('gameState');
+  };
+
+  const handleRestart = () => {
+    localStorage.removeItem('gameState');
+    setShowResume(false);
+    startNewWord();
+  };
+
+  if (showResume) {
+    return (
+      <VStack gap={6}>
+        <Text fontSize="xl">Game in progress found</Text>
+        <Text>Would you like to resume your previous game?</Text>
+        <HStack>
+          <Button onClick={handleResume} colorScheme="blue">Resume Game</Button>
+          <Button onClick={handleRestart}>Start New Game</Button>
+        </HStack>
+      </VStack>
+    );
+  }
 
   return (
     <VStack gap={6} align="stretch">
@@ -144,6 +210,8 @@ function Game({
           placeholder="Type the word here..."
           size="lg"
           maxW="400px"
+          transition="color 0.2s ease"
+          padding={2}
         />
       </VStack>
 

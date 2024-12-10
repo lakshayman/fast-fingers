@@ -22,9 +22,9 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
 
     const difficulties = createListCollection({
         items: [
-            { label: "Easy", value: "easy", description: "30-40 WPM target" },
-            { label: "Medium", value: "medium", description: "40-60 WPM target" },
-            { label: "Hard", value: "hard", description: "60+ WPM target" },
+            { label: "Easy", value: "easy", description: "2 - 4 letter words" },
+            { label: "Medium", value: "medium", description: "5 - 8 letter words" },
+            { label: "Hard", value: "hard", description: "8+ letter words" },
         ],
     })
 
