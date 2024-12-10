@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
-import Form from './form'
+import Form from '../components/custom/form'
 
 const defaultProps = {
     playerName: '',

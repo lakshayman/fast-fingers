@@ -168,7 +168,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
       <Text margin="auto" w="fit-content" textAlign="center" suppressHydrationWarning bg="white" borderRadius="xl" p={4}>Time Left: {timeLeft.toFixed(1)}s</Text>
 
       <VStack gap={4}>
-        <Text fontSize="2xl" fontWeight="bold" bg="white" borderRadius="xl" p={4} w="fit-content">{currentWord}</Text>
+        <Text fontSize="2xl" fontWeight="bold" bg="white" borderRadius="xl" p={4} w="fit-content" data-testid="game-word">{currentWord}</Text>
         <Input
           ref={inputRef}
           value={input}
@@ -180,6 +180,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
           padding={2}
           bg="white"
           borderRadius="xl"
+          data-testid="game-input"
           autoFocus
         />
       </VStack>
