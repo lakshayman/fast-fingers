@@ -29,6 +29,9 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
     })
 
     const handleStartGame = () => {
+        if (!playerName || !difficulty) {
+            return;
+        }
         if (typeof window !== "undefined") {
             window.sessionStorage.setItem("playerName", playerName);
             window.sessionStorage.setItem("difficulty", difficulty);
@@ -65,6 +68,11 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
                             borderRadius="xl"
                             value={playerName}
                             onChange={(e) => setPlayerName(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleStartGame();
+                                }
+                            }}
                             _placeholder={{ color: 'gray.400' }}
                         />
                     </Field>
