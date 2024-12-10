@@ -43,6 +43,24 @@ yarn dev
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to start playing!
 
+## Testing 🧪
+
+Run the test suite:
+```bash
+npm test
+# or
+yarn test
+```
+
+Run tests in watch mode:
+```bash
+npm run test:watch
+# or
+yarn test:watch
+```
+## Test Coverage
+![image](https://github.com/user-attachments/assets/bd7e8044-b8a3-4374-947c-507f4e3d26fd)
+
 ## Game Rules 📜
 
 - Choose your difficulty level:
@@ -66,24 +84,6 @@ yarn dev
 
 ## Working Video
 https://github.com/user-attachments/assets/2d77f439-24e4-4b0a-8570-e734d0e564b2
-
-## Testing 🧪
-
-Run the test suite:
-```bash
-npm test
-# or
-yarn test
-```
-
-Run tests in watch mode:
-```bash
-npm run test:watch
-# or
-yarn test:watch
-```
-## Test Coverage
-![image](https://github.com/user-attachments/assets/bd7e8044-b8a3-4374-947c-507f4e3d26fd)
 
 
 ## Contributing 🤝
