@@ -1,6 +1,6 @@
 "use client"
 
-import { Container, VStack, Text, Table, HStack, Button, Box, Spinner } from "@chakra-ui/react"
+import { Container, VStack, Spinner } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
