@@ -29,9 +29,10 @@ export default function Form({ playerName, difficulty, setPlayerName, setDifficu
     })
 
     const handleStartGame = () => {
-        console.log("Starting game with:", { playerName, difficulty });
-        typeof window !== "undefined" && window.sessionStorage.setItem("playerName", playerName);
-        typeof window !== "undefined" && window.sessionStorage.setItem("difficulty", difficulty);
+        if (typeof window !== "undefined") {
+            window.sessionStorage.setItem("playerName", playerName);
+            window.sessionStorage.setItem("difficulty", difficulty);
+        }
         setScreen("GAME");
     };
 

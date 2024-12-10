@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 type Difficulty = 'easy' | 'medium' | 'hard';
 
 const WORD_LENGTH_RANGES = {
