@@ -38,6 +38,13 @@ const config: Config = {
   //   "\\\\node_modules\\\\"
   // ],
 
+  coveragePathIgnorePatterns: [
+    "src/tests",
+    "src/components/ui",
+    "src/constants",
+    "node_modules"
+  ],
+
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
   testEnvironment: 'jsdom',
