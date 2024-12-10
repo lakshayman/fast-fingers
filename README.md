@@ -54,6 +54,9 @@ yarn dev
 - The game saves automatically if you need to leave
 - Compare your scores with others on the leaderboard
 
+## Time taken to complete
+1 Day 6 Hours
+
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/cc7939f7-3fcb-4b7b-9dd3-64fe39b9e31e)
 ![image](https://github.com/user-attachments/assets/a784d206-e964-4328-9c1b-8dc68ef615b4)
