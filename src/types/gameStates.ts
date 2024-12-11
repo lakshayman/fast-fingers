@@ -9,6 +9,7 @@ export type GameStates = {
   highestScore: number;
   showResume: boolean;
   savedState: GameState | null;
+  hasHandledResume: boolean;
 }
 
 export type PageAction = 
@@ -19,4 +20,5 @@ export type PageAction =
   | { type: 'SET_LEADERBOARD'; payload: LeaderboardEntry[] }
   | { type: 'SET_HIGHEST_SCORE'; payload: number }
   | { type: 'SET_SHOW_RESUME'; payload: boolean }
-  | { type: 'SET_SAVED_STATE'; payload: GameState | null } 
+  | { type: 'SET_SAVED_STATE'; payload: GameState | null }
+  | { type: 'HANDLE_RESUME'; payload: string }

@@ -43,9 +43,8 @@ export default function Home() {
   }, []);
 
   const handleResume = useCallback(() => {
-    console.log('handleResume', gameState);
     if (gameState) {
-      dispatch({ type: 'SET_SCREEN', payload: "GAME" });
+      dispatch({ type: 'HANDLE_RESUME', payload: "GAME" });
     }
   }, [gameState]);
 
@@ -54,7 +53,7 @@ export default function Home() {
       updateLeaderboard(playerName, difficulty, gameState.localScore);
     }
     setGameState(null);
-    dispatch({ type: 'SET_SCREEN', payload: "FORM" });
+    dispatch({ type: 'HANDLE_RESUME', payload: "FORM" });
   }, [gameState, playerName, difficulty, updateLeaderboard]);
 
   if (isLoading) {
@@ -66,7 +65,7 @@ export default function Home() {
     </Container>;
   }
 
-  if (gameState) {
+  if (gameState && !state.hasHandledResume) {
     return (
       <ResumeGame
         savedState={gameState}

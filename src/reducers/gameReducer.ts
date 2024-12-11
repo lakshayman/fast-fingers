@@ -13,6 +13,12 @@ export function reducer(state: GameStates, action: PageAction) {
       return { ...state, highestScore: action.payload };
     case 'SET_SAVED_STATE':
       return { ...state, savedState: action.payload };
+    case 'HANDLE_RESUME':
+      return {
+        ...state,
+        hasHandledResume: true,
+        screen: action.payload
+      };
     default:
       return state;
   }

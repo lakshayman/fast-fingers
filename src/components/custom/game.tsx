@@ -54,7 +54,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     setGameState(null);
   }, [state.totalTimeElapsed, setScore, setScreen, setGameState]);
 
-  const startNewWord = useCallback(() => {
+  const startNewWord = useCallback((firstWord: boolean) => {
     const newWord = getRandomWord();
     const wordTime = calculateTimeForWord(newWord);
     
@@ -78,7 +78,8 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     timerRef.current = setInterval(() => {
       dispatch({ type: 'TICK_TIMER', payload: 0.1 });
     }, 100);
-    updateDifficultyLevel();
+    
+    if(!firstWord) updateDifficultyLevel();
   }, [getRandomWord, calculateTimeForWord, updateDifficultyLevel]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +87,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     if (e.target.value === state.currentWord) {
       const timeSpent = state.wordStartTime - state.timeLeft;
       dispatch({ type: 'WORD_COMPLETED', payload: timeSpent });
-      startNewWord();
+      startNewWord(false);
     } else {
       e.target.style.color = e.target.value === state.currentWord.slice(0, e.target.value.length) ? 'green' : 'red';
     }
@@ -104,7 +105,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
       setGameState(gameState);
     };
 
-    startNewWord();
+    startNewWord(true);
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
