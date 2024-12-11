@@ -14,23 +14,12 @@ const defaultProps = {
   difficulty: 'easy',
   setScore: jest.fn(),
   setScreen: jest.fn(),
+  setGameState: jest.fn(),
   dictionary: mockDictionary,
   savedState: null
 }
 
 describe('Game', () => {
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
-
-  afterEach(() => {
-    act(() => {
-      jest.runOnlyPendingTimers()
-    })
-    jest.useRealTimers()
-    localStorage.clear()
-  })
-
   it('updates difficulty factor when word is typed correctly', async () => {
     render(<ChakraProvider value={defaultSystem}>
       <Game {...defaultProps} />
@@ -44,27 +33,8 @@ describe('Game', () => {
       await fireEvent.change(input, { target: { value: currentWord! } })
     })
 
-    act(() => {
-      jest.advanceTimersByTime(500)
-    })
-
     const newDifficultyFactor = screen.getByText(/Difficulty Factor/).textContent
     expect(newDifficultyFactor).not.toBe(initialDifficultyFactor)
-  })
-
-  it('saves game state to localStorage', () => {
-    render(<ChakraProvider value={defaultSystem}>
-      <Game {...defaultProps} />
-    </ChakraProvider>)
-
-    act(() => {
-      jest.advanceTimersByTime(1000)
-    })
-
-    const savedState = localStorage.getItem('gameState')
-    expect(savedState).toBeTruthy()
-    const parsedState = JSON.parse(savedState!)
-    expect(parsedState.playerName).toBe('Test Player')
   })
 
   it('handles stop game button click', () => {
