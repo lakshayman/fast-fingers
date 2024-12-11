@@ -1,7 +1,7 @@
 "use client"
 
 import { Container, VStack, Spinner } from "@chakra-ui/react"
-import { useReducer, useMemo, useCallback } from "react"
+import { useReducer, useMemo, useCallback, useEffect } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
 import type { LeaderboardEntry } from "@/types/game"
@@ -41,7 +41,12 @@ export default function Home() {
       .slice(0, 10));
   }, []);
 
+  useEffect(() => {
+    console.log('gameState', gameState);
+  }, [gameState]);
+
   const handleResume = useCallback(() => {
+    console.log('handleResume', gameState);
     if (gameState) {
       dispatch({ type: 'SET_SCREEN', payload: "GAME" });
     }
@@ -99,6 +104,7 @@ export default function Home() {
           setScreen={(screen) => dispatch({ type: 'SET_SCREEN', payload: screen })}
           dictionary={dictionary}
           savedState={gameState}
+          setGameState={setGameState}
         />
       ) : (
         <FinalScore

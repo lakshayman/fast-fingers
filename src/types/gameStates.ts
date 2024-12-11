@@ -11,7 +11,7 @@ export type GameStates = {
   savedState: GameState | null;
 }
 
-export type GameAction = 
+export type PageAction = 
   | { type: 'SET_SCREEN'; payload: string }
   | { type: 'SET_SCORE'; payload: number }
   | { type: 'SET_DICTIONARY'; payload: Record<string, string[]> | null }

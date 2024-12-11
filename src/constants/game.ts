@@ -1,4 +1,4 @@
-import { LeaderboardEntry } from "@/types/game";
+import { GameState, LeaderboardEntry } from "@/types/game";
 
 export const INITIAL_DIFFICULTY_FACTORS = {
   easy: 1,
@@ -29,4 +29,16 @@ export const initialState = {
   highestScore: 0,
   showResume: false,
   savedState: null,
-} as const; 
+};
+
+export const gameInitialState = (savedState: GameState | null, initialDifficulty: string) => ({
+  currentWord: savedState?.currentWord || "",
+  input: "",
+  timeLeft: savedState?.timeLeft || 2,
+  localScore: savedState?.localScore || 0,
+  difficulty: savedState?.difficulty || initialDifficulty,
+  difficultyFactor: savedState?.difficultyFactor || 
+    INITIAL_DIFFICULTY_FACTORS[initialDifficulty as keyof typeof INITIAL_DIFFICULTY_FACTORS],
+  totalTimeElapsed: savedState?.totalTimeElapsed || 0,
+  wordStartTime: savedState?.wordStartTime || 0,
+});

@@ -1,11 +1,15 @@
-import { LeaderboardEntry } from "@/types/game";
+import { GameState, LeaderboardEntry } from "@/types/game";
 import { useState } from "react";
 
-export function useLocalStorage(key: string, initialValue: LeaderboardEntry[] | null) {
+export function useLocalStorage(key: string, initialValue: LeaderboardEntry[] | GameState | null) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      const item = typeof window !== "undefined" ? window.localStorage.getItem(key) : null;
-      return item && item !== "undefined" ? JSON.parse(item) : initialValue;
+      const item = typeof window !== "undefined" ?
+        window.localStorage.getItem(key) :
+        key === "leaderboard" ?
+          JSON.stringify(initialValue) :
+          null;
+      return item && item !== "undefined" ? JSON.parse(item) : null;
     } catch (error) {
       console.error('Error reading localStorage key:', key, error);
       return initialValue;
