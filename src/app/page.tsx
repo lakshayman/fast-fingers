@@ -1,7 +1,7 @@
 "use client"
 
 import { Container, VStack, Spinner } from "@chakra-ui/react"
-import { useReducer, useMemo, useCallback, useEffect } from "react"
+import { useReducer, useMemo, useCallback } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
 import type { LeaderboardEntry } from "@/types/game"
@@ -28,10 +28,6 @@ export default function Home() {
       entry.score > max ? entry.score : max, 0
     ), [leaderboard]
   );
-
-  useEffect(() => {
-    console.log(leaderboard);
-  }, [leaderboard]);
 
   const updateLeaderboard = useCallback((playerName: string, difficulty: string, score: number) => {
     const newEntry: LeaderboardEntry = {

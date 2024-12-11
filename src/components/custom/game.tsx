@@ -16,7 +16,7 @@ interface Props {
   difficulty: string;
   setScore: (score: number) => void;
   setScreen: (screen: string) => void;
-  dictionary: Record<string, string[]>;
+  dictionary: Record<string, string[]> | null;
   savedState: GameState | null;
 }
 
@@ -60,7 +60,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
   }, [currentWord, timeLeft, localScore, difficulty, difficultyFactor, totalTimeElapsed, wordStartTime]);
 
   const getRandomWord = () => {
-    const words = dictionary[difficulty];
+    const words = dictionary?.[difficulty] || [];
     if (!words || words.length === 0) return "error occurred";
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
