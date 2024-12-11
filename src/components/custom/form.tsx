@@ -17,16 +17,24 @@ import {
 } from "@/components/ui/select";
 import { Field } from "@/components/ui/field";
 import { LuKeyboard, LuZap } from "react-icons/lu";
+import { useMemo } from "react";
 
-export default function Form({ playerName, difficulty, setPlayerName, setDifficulty, setScreen }: { playerName: string, difficulty: string, setPlayerName: (playerName: string) => void, setDifficulty: (difficulty: string) => void, setScreen: (screen: string) => void }) {
+type FormProps = {
+    playerName: string;
+    difficulty: string;
+    setPlayerName: (playerName: string) => void;
+    setDifficulty: (difficulty: string) => void;
+    setScreen: (screen: string) => void;
+};
 
-    const difficulties = createListCollection({
+export default function Form({ playerName, difficulty, setPlayerName, setDifficulty, setScreen }: FormProps) {
+    const difficulties = useMemo(() => createListCollection({
         items: [
-            { label: "Easy", value: "easy", description: "2 - 4 letter words" },
-            { label: "Medium", value: "medium", description: "5 - 8 letter words" },
-            { label: "Hard", value: "hard", description: "8+ letter words" },
+          { label: "Easy", value: "easy", description: "2 - 4 letter words" },
+          { label: "Medium", value: "medium", description: "5 - 8 letter words" },
+          { label: "Hard", value: "hard", description: "8+ letter words" },
         ],
-    })
+    }), []);
 
     const handleStartGame = () => {
         if (!playerName || !difficulty) {

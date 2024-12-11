@@ -18,7 +18,16 @@ export function reducer(state: GameStates, action: PageAction) {
   }
 }
 
-export function gameReducer(state: any, action: GameAction) {
+export function gameReducer(state: {
+  currentWord: string,
+  difficulty: string,
+  difficultyFactor: number,
+  timeLeft: number,
+  localScore: number,
+  totalTimeElapsed: number,
+  wordStartTime: number,
+  input: string,
+}, action: GameAction) {
   switch (action.type) {
     case 'SET_WORD':
       return { ...state, currentWord: action.payload };
@@ -53,6 +62,8 @@ export function gameReducer(state: any, action: GameAction) {
         return { ...state, timeLeft: 0 };
       }
       return { ...state, timeLeft: newTimeLeft };
+    case 'NEW_WORD':
+      return { ...state, currentWord: action.payload.word, timeLeft: action.payload.timeLeft, wordStartTime: action.payload.wordStartTime };
     default:
       return state;
   }

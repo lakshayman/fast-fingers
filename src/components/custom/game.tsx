@@ -54,13 +54,19 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
     setGameState(null);
   }, [state.totalTimeElapsed, setScore, setScreen, setGameState]);
 
-  const startNewWord = () => {
+  const startNewWord = useCallback(() => {
     const newWord = getRandomWord();
-    dispatch({ type: 'SET_WORD', payload: newWord });
     const wordTime = calculateTimeForWord(newWord);
-    dispatch({ type: 'SET_TIME_LEFT', payload: wordTime });
-    dispatch({ type: 'SET_WORD_START_TIME', payload: wordTime });
-
+    
+    dispatch({
+      type: 'NEW_WORD',
+      payload: {
+        word: newWord,
+        timeLeft: wordTime,
+        wordStartTime: wordTime
+      }
+    });
+    
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
@@ -73,7 +79,7 @@ function Game({ playerName, difficulty: initialDifficulty, setScore, setScreen, 
       dispatch({ type: 'TICK_TIMER', payload: 0.1 });
     }, 100);
     updateDifficultyLevel();
-  }
+  }, [getRandomWord, calculateTimeForWord, updateDifficultyLevel]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET_INPUT', payload: e.target.value });

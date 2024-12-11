@@ -1,19 +1,20 @@
 "use client"
 
 import { Container, VStack, Spinner } from "@chakra-ui/react"
-import { useReducer, useMemo, useCallback, useEffect } from "react"
+import { useReducer, useMemo, useCallback, lazy } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
 import type { LeaderboardEntry } from "@/types/game"
-import Leaderboard from "@/components/custom/leaderboard"
-import ResumeGame from "@/components/custom/resume-game"
-import FinalScore from "@/components/custom/final-score"
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { useSessionStorage } from '@/hooks/useSessionStorage'
 import { GameStates } from '@/types/gameStates'
 import { initialState } from '@/constants/game'
 import { useDictionary } from '@/hooks/useDictionary'
 import { reducer } from '@/reducers/gameReducer'
+import ResumeGame from "@/components/custom/resume-game"
+
+const FinalScore = lazy(() => import('@/components/custom/final-score'));
+const Leaderboard = lazy(() => import('@/components/custom/leaderboard'));
 
 export default function Home() {
   const [state, dispatch] = useReducer(reducer, initialState as GameStates);
@@ -40,10 +41,6 @@ export default function Home() {
     setLeaderboard([...leaderboard, newEntry].sort((a, b) => b.score - a.score)
       .slice(0, 10));
   }, []);
-
-  useEffect(() => {
-    console.log('gameState', gameState);
-  }, [gameState]);
 
   const handleResume = useCallback(() => {
     console.log('handleResume', gameState);

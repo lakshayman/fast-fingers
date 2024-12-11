@@ -38,4 +38,11 @@ export type GameAction =
   | { type: 'RESET_INPUT' }
   | { type: 'DECREMENT_TIME_LEFT'; payload: number }
   | { type: 'WORD_COMPLETED'; payload: number }
-  | { type: 'TICK_TIMER'; payload: number };
+  | { type: 'TICK_TIMER'; payload: number }
+  | { type: 'NEW_WORD'; payload: { word: string, timeLeft: number, wordStartTime: number } };
+
+export interface GameStatsProps {
+  playerName: string;
+  difficulty: string;
+  difficultyFactor: number;
+}
