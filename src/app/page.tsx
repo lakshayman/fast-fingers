@@ -1,7 +1,7 @@
 "use client"
 
 import { Container, VStack, Spinner } from "@chakra-ui/react"
-import { useReducer, useMemo, useCallback } from "react"
+import { useReducer, useMemo, useCallback, useEffect } from "react"
 import Form from "@/components/custom/form"
 import Game from "@/components/custom/game"
 import type { LeaderboardEntry } from "@/types/game"
@@ -23,11 +23,15 @@ export default function Home() {
   const [difficulty, setDifficulty] = useSessionStorage('difficulty', 'easy');
   const { dictionary, isLoading } = useDictionary();
 
-  const highestScore = useMemo(() => 
-    leaderboard.reduce((max: number, entry: LeaderboardEntry) => 
+  const highestScore = useMemo(() =>
+    leaderboard.reduce((max: number, entry: LeaderboardEntry) =>
       entry.score > max ? entry.score : max, 0
     ), [leaderboard]
   );
+
+  useEffect(() => {
+    console.log(leaderboard);
+  }, [leaderboard]);
 
   const updateLeaderboard = useCallback((playerName: string, difficulty: string, score: number) => {
     const newEntry: LeaderboardEntry = {
@@ -37,8 +41,7 @@ export default function Home() {
       timestamp: Date.now()
     };
 
-    setLeaderboard((prev: LeaderboardEntry[]) => [...prev, newEntry]
-      .sort((a, b) => b.score - a.score)
+    setLeaderboard([...leaderboard, newEntry].sort((a, b) => b.score - a.score)
       .slice(0, 10));
   }, []);
 
@@ -67,7 +70,7 @@ export default function Home() {
 
   if (gameState) {
     return (
-      <ResumeGame 
+      <ResumeGame
         savedState={gameState}
         onResume={handleResume}
         onRestart={handleRestart}
@@ -102,7 +105,7 @@ export default function Home() {
           savedState={gameState}
         />
       ) : (
-        <FinalScore 
+        <FinalScore
           score={state.score}
           highestScore={highestScore}
           leaderboard={leaderboard}
